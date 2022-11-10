@@ -74,3 +74,42 @@ btnDisplayUserData.addEventListener("click", displayUserData);
 
 //Final Statistics / Roll the Dice
 
+const btnRollDiceElement = document.querySelector("#statistics button");
+
+function rollDice() {
+  return Math.floor(Math.random() * 6) + 1; // returns random number, by default between 0 and 1, but if multiplied than number is added Math.floor(): 5.64 => 5
+}
+
+function deriveNumberOfDiceRolls() {
+  const targetNumberInputElement =
+    document.getElementById("user-target-number");
+  const dicerRollsListElement = document.getElementById("dice-rolls");
+
+  const enteredNumber = targetNumberInputElement.value;
+  dicerRollsListElement.innerHTML = "";
+
+  let hasRolledTargetNumber = false;
+  let numberOfRoles = 0;
+
+  while (!hasRolledTargetNumber) {
+    const rolledNumber = rollDice();
+    // if (rolledNumber == enteredNumber) {
+    //   hasRolledTargetNumber = true;
+    // }
+    numberOfRoles++;
+    const newRollListItemElement = document.createElement('li');
+    const outputText = 'Roll ' + numberOfRoles + ': ' + rolledNumber;
+    newRollListItemElement.textContent = outputText;
+    dicerRollsListElement.append(newRollListItemElement);
+    //we can shorten this with:
+    hasRolledTargetNumber = rolledNumber == enteredNumber; //store the boolean value from some comparison directly
+  }
+
+  const outputTotalRollsElement = document.getElementById('output-total-rolls');
+  const outputTargetNumberElement = document.getElementById('output-target-number');
+
+  outputTargetNumberElement.textContent = enteredNumber;
+  outputTotalRollsElement.textContent = numberOfRoles;
+}
+
+btnRollDiceElement.addEventListener("click", deriveNumberOfDiceRolls);
